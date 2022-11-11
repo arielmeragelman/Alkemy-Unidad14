@@ -54,3 +54,24 @@ order by Precio Desc
 
 
 --Listar los proveedores que proveen más de 3 materiales
+SELECT p.CodProv,p.Nombre,COUNT(pp.CodMat) as CantMateriales
+from Proveedor p 
+inner join Provisto_Por pp 
+on p.CodProv = pp.CodProv
+group by p.CodProv,p.Nombre
+having COUNT(pp.CodMat) > 3
+
+--Crear una vista para el caso de los proveedores que proveen más de 4 materiales. Mostrar la forma de invocar esa vista.
+
+CREATE VIEW v_cantidad_prov_mas_3_art as (
+SELECT p.CodProv,p.Nombre,COUNT(pp.CodMat) as CantMateriales
+from Proveedor p 
+inner join Provisto_Por pp 
+on p.CodProv = pp.CodProv
+group by p.CodProv,p.Nombre
+having COUNT(pp.CodMat) > 3);
+
+select Nombre from v_cantidad_prov_mas_3_art where CantMateriales > 9;
+
+
+
